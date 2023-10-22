@@ -23,7 +23,7 @@ def getIndeedData(lang, pageCount):
     li_elements = content.find('ul').find_all(
         name='li', recursive=False)
 
-    result_list = []  # 결과를 저장할 리스트
+    result = []  # 결과를 저장할 리스트
 
     # 가져온 li 태그 출력
     for li in li_elements:
@@ -32,10 +32,10 @@ def getIndeedData(lang, pageCount):
             href = aTag['href']
             jobTitle = aTag.find('span').get('title')
             companyInfos = li.find('div', 'companyInfo')
-            result_dict = {'jobTitle': jobTitle.replace(',',''), 'href': href.replace(',',''), 'companyName': companyInfos.find(
-                'span', _class='companyName').replace(',',''), 'location': companyInfos.find('span', _class='companyLocation').replace(',','')}
-            result_list.append(result_dict)  # 딕셔너리를 리스트에 추가
+            result_list = [jobTitle.replace(',',''), href.replace(',',''), companyInfos.find(
+                'span', class_='companyName').get_text().replace(',',''), companyInfos.find('div', class_='companyLocation').get_text().replace(',','')]    
+            result.append(result_list) 
         except AttributeError:
             continue  # 예외가 발생하면 건너뛰기
-
-    return (result_list)
+      
+    return result
