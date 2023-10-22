@@ -32,8 +32,8 @@ def getIndeedData(lang, pageCount):
             href = aTag['href']
             jobTitle = aTag.find('span').get('title')
             companyInfos = li.find('div', 'companyInfo')
-            result_dict = {'jobTitle': jobTitle, 'href': href, 'companyName': companyInfos.find(
-                'span', _class='companyName'), 'location': companyInfos.find('span', _class='companyLocation')}
+            result_dict = {'jobTitle': jobTitle.replace(',',''), 'href': href.replace(',',''), 'companyName': companyInfos.find(
+                'span', _class='companyName').replace(',',''), 'location': companyInfos.find('span', _class='companyLocation').replace(',','')}
             result_list.append(result_dict)  # 딕셔너리를 리스트에 추가
         except AttributeError:
             continue  # 예외가 발생하면 건너뛰기
